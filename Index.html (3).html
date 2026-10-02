@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bioquímica Médica - Flashcards de Aminoácidos</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        medical: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                            800: '#0c4a6e',
+                            900: '#0f172a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+        
+        /* Custom scrollbar for cards */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(14, 165, 233, 0.4);
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(14, 165, 233, 0.7);
+        }
+
+        .gradient-card-front {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen font-sans flex flex-col">
+
+    <!-- Top Author / Student Banner -->
+    <div class="bg-slate-950 text-slate-300 text-xs py-1.5 px-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <div class="flex items-center gap-2">
+                <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="text-slate-400">Estudiante / Autor:</span>
+                <span class="font-bold text-white tracking-wide uppercase text-xs sm:text-sm">Jason Fernando Pulido Inzunza</span>
+            </div>
+            <div class="text-[11px] text-sky-400 font-medium">
+                <i class="fa-solid fa-graduation-cap mr-1"></i> Bioquímica Médica
+            </div>
+        </div>
+    </div>
+
+    <!-- Header/Navbar -->
+    <header class="bg-slate-900 text-white shadow-md sticky top-0 z-50 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row justify-between items-center gap-3">
+            <div class="flex items-center space-x-3">
+                <div class="p-2.5 bg-sky-600 rounded-xl text-white shadow-lg shadow-sky-500/30">
+                    <i class="fa-solid font-bold fa-dna text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                        BioFlash <span class="text-xs bg-sky-500/20 text-sky-300 border border-sky-500/30 font-medium px-2 py-0.5 rounded-full">Aminoácidos</span>
+                    </h1>
+                    <p class="text-xs text-slate-400">Bioquímica Médica & Clínica</p>
+                </div>
+            </div>
+
+            <!-- Mode Selector Tabs -->
+            <div class="flex bg-slate-800 p-1 rounded-xl border border-slate-700/60 w-full md:w-auto text-xs sm:text-sm font-medium">
+                <button id="tab-grid" onclick="setMode('grid')" class="flex-1 md:flex-none px-4 py-2 rounded-lg transition-all flex items-center justify-center gap-2 bg-sky-600 text-white shadow-md">
+                    <i class="fa-solid fa-border-all"></i>
+                    <span>Galería</span>
+                </button>
+                <button id="tab-single" onclick="setMode('single')" class="flex-1 md:flex-none px-4 py-2 rounded-lg transition-all flex items-center justify-center gap-2 text-slate-300 hover:text-white">
+                    <i class="fa-solid fa-clone"></i>
+                    <span>Estudio Individual</span>
+                </button>
+                <button id="tab-quiz" onclick="setMode('quiz')" class="flex-1 md:flex-none px-4 py-2 rounded-lg transition-all flex items-center justify-center gap-2 text-slate-300 hover:text-white">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Modo Quiz</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- Global Stats & Progress Bar -->
+        <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200/80 mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="w-full md:w-1/3 flex items-center justify-between md:justify-start gap-4">
+                <div>
+                    <span class="text-xs text-slate-500 uppercase tracking-wider font-semibold block">Progreso de Dominio</span>
+                    <span id="mastered-count" class="text-2xl font-extrabold text-sky-600">0 / 20</span>
+                    <span class="text-xs text-slate-400 font-normal"> Aminoácidos aprendidos</span>
+                </div>
+                <button onclick="resetProgress()" class="text-xs text-slate-400 hover:text-rose-500 underline transition-colors" title="Reiniciar progreso">
+                    Reiniciar
+                </button>
+            </div>
+            <div class="w-full md:w-2/3">
+                <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden p-0.5 border border-slate-200">
+                    <div id="progress-bar" class="bg-gradient-to-r from-sky-500 to-indigo-600 h-full rounded-full transition-all duration-500 w-0"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter & Search Controls (Visible in Grid mode) -->
+        <div id="controls-section" class="space-y-4 mb-6">
+            <div class="flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between">
+                <!-- Search Input -->
+                <div class="relative flex-1">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="search-input" placeholder="Buscar por nombre, letra (ej: 'W') o 3 letras (ej: 'Trp')..." 
+                        class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent shadow-sm">
+                </div>
+
+                <!-- Filters -->
+                <div class="flex flex-wrap gap-2 items-center">
+                    <select id="category-filter" onchange="applyFilters()" class="bg-white border border-slate-200 text-slate-700 text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-sm font-medium">
+                        <option value="all">Todas las Clases</option>
+                        <option value="nonpolar-aliphatic">Alifáticos No Polares</option>
+                        <option value="aromatic">Aromáticos</option>
+                        <option value="polar-uncharged">Polares sin Carga</option>
+                        <option value="positive-basic">Carga Positiva (Básicos)</option>
+                        <option value="negative-acidic">Carga Negativa (Ácidos)</option>
+                    </select>
+
+                    <select id="essential-filter" onchange="applyFilters()" class="bg-white border border-slate-200 text-slate-700 text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-sm font-medium">
+                        <option value="all">Nutrición: Todos</option>
+                        <option value="essential">Esenciales</option>
+                        <option value="non-essential">No Esenciales</option>
+                        <option value="semi-essential">Condicionales/Semi</option>
+                    </select>
+
+                    <select id="status-filter" onchange="applyFilters()" class="bg-white border border-slate-200 text-slate-700 text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-sm font-medium">
+                        <option value="all">Estado: Todos</option>
+                        <option value="mastered">Solo Aprendidos</option>
+                        <option value="unmastered">Por Aprender</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 1: GRID GALLERY -->
+        <div id="view-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Cards rendered dynamic via JS -->
+        </div>
+
+        <!-- VIEW 2: SINGLE FLASHCARD STUDY MODE -->
+        <div id="view-single" class="hidden flex-col items-center justify-center max-w-2xl mx-auto py-4">
+            <div class="w-full flex justify-between items-center mb-4 px-2">
+                <span id="single-card-indicator" class="text-sm font-semibold text-slate-500">Tarjeta 1 de 20</span>
+                <button onclick="shuffleCards()" class="text-xs bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-shuffle"></i> Aleatorio
+                </button>
+            </div>
+
+            <!-- 3D Flip Card Container -->
+            <div id="single-card-container" class="w-full h-[480px] perspective-1000 cursor-pointer" onclick="flipSingleCard()">
+                <div id="single-card-inner" class="relative w-full h-full duration-500 transform-style-3d shadow-xl rounded-2xl">
+                    <!-- Front -->
+                    <div id="single-card-front" class="absolute w-full h-full backface-hidden gradient-card-front rounded-2xl border-2 border-slate-200 p-6 flex flex-col justify-between items-center text-center">
+                        <!-- Content dynamically updated -->
+                    </div>
+                    <!-- Back -->
+                    <div id="single-card-back" class="absolute w-full h-full backface-hidden rotate-y-180 bg-white rounded-2xl border-2 border-slate-200 p-6 flex flex-col justify-between custom-scrollbar overflow-y-auto">
+                        <!-- Content dynamically updated -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Single Controls Navigation -->
+            <div class="flex items-center justify-between w-full mt-6 gap-4">
+                <button onclick="prevCard()" class="px-5 py-2.5 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold rounded-xl shadow-sm transition flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> Anterior
+                </button>
+
+                <button id="single-mastery-btn" onclick="toggleCurrentMastery(event)" class="px-5 py-2.5 bg-emerald-100 text-emerald-800 border border-emerald-300 hover:bg-emerald-200 font-semibold rounded-xl transition flex items-center gap-2">
+                    <i class="fa-regular fa-circle-check"></i> Marcar como Aprendido
+                </button>
+
+                <button onclick="nextCard()" class="px-5 py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded-xl shadow-md transition flex items-center gap-2">
+                    Siguiente <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+            <p class="text-xs text-slate-400 mt-3 text-center"><i class="fa-solid fa-hand-pointer mr-1"></i> Haz clic en la tarjeta o espacio para voltearla</p>
+        </div>
+
+        <!-- VIEW 3: QUIZ MODE -->
+        <div id="view-quiz" class="hidden max-w-2xl mx-auto py-2">
+            <div class="bg-white rounded-2xl p-6 shadow-md border border-slate-200">
+                <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
+                    <div>
+                        <span class="text-xs uppercase tracking-wider text-slate-400 font-bold">Autoevaluación de Bioquímica</span>
+                        <h2 class="text-lg font-bold text-slate-800">¿Cuál es este Aminoácido?</h2>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs text-slate-500 block">Puntaje</span>
+                        <span id="quiz-score" class="text-xl font-black text-sky-600">0 / 0</span>
+                    </div>
+                </div>
+
+                <!-- Quiz Question Card -->
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-6">
+                    <p class="text-xs font-semibold text-sky-600 uppercase mb-1" id="quiz-clue-category">Clasificación</p>
+                    <div id="quiz-clues" class="space-y-3 text-sm text-slate-700">
+                        <!-- Clues injected here -->
+                    </div>
+                </div>
+
+                <!-- Quiz Options (4 Choice buttons) -->
+                <div id="quiz-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                    <!-- Option buttons dynamically generated -->
+                </div>
+
+                <!-- Feedback Banner -->
+                <div id="quiz-feedback" class="hidden p-4 rounded-xl text-center font-semibold text-sm mb-4"></div>
+
+                <!-- Quiz Next Button -->
+                <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="hidden w-full py-3 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-xl shadow-md transition">
+                    Siguiente Pregunta <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-6 border-t border-slate-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p>BioFlash Cards • Recurso educativo de Bioquímica Médica y Metabólica.</p>
+            <p class="text-slate-500">Diseñado para estudiantes de medicina, enfermería y ciencias de la salud.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Data structure for the 20 standard amino acids in medical biochemistry
+        const aminoAcids = [
+            {
+                id: 'ala',
+                name: 'Alanina',
+                code1: 'A',
+                code3: 'Ala',
+                category: 'nonpolar-aliphatic',
+                categoryLabel: 'Alifático No Polar',
+                essentiality: 'non-essential',
+                essentialityLabel: 'No Esencial',
+                pKa: 'pKa₁: 2.34 | pKa₂: 9.69',
+                pI: '6.01',
+                structureSvg: `<svg viewBox="0 0 100 80" class="w-24 h-20 text-slate-700 font-mono text-xs"><text x="10" y="45" font-weight="bold" fill="#0284c7">H₂N</text><line x1="32" y1="40" x2="50" y2="40" stroke="#64748b" stroke-width="2"/><text x="45" y="45" font-weight="bold">CH</text><line x1="53" y1="30" x2="53" y2="15" stroke="#64748b" stroke-width="2"/><text x="45" y="12" font-weight="bold" fill="#16a34a">CH₃</text><line x1="62" y1="40" x2="78" y2="40" stroke="#64748b" stroke-width="2"/><text x="78" y="45" font-weight="bold" fill="#dc2626">COOH</text></svg>`,
+                keyFeatures: [
+                    'Sustrato clave en la Gluconeogénesis a través del Ciclo de la Alanina-Glucosa (músculo-hígado).',
+                    'Aminoácido glucogénico primario transportador de grupos amino no tóxicos desde el músculo.',
+                    'Transaminación directa produce Piruvato mediante la ALT (Alanina Aminotransferasa), marcador clínico hepático.'
+                ],
+                clinicalNote: 'Elevación de ALT sérica indica daño hepatocelular (ej. hepatitis, hígado graso).'
+            },
+            {
+                id: 'arg',
+                name: 'Arginina',
+                code1: 'R',
+                code3: 'Arg',
+                category: 'positive-basic',
+                categoryLabel: 'Carga Positiva (Básico)',
+                essentiality: 'semi-essential',
+                essentialityLabel: 'Condicionalmente Esencial',
+                pKa: 'pKa₁: 2.17 | pKa₂: 9.04 | pKR: 12.48',
+                pI: '10.76',
+                structureSvg: `<svg viewBox="0 0 120 80" class="w-28 h-20 text-slate-700 font-mono text-xs"><text x="5" y="45" font-weight="bold" fill="#0284c7">H₂N</text><line x1="27" y1="40" x2="40" y2="40" stroke="#64748b" stroke-width="2"/><text x="38" y="45" font-weight="bold">CH</text><line x1="55" y1="40" x2="68" y2="40" stroke="#64748b" stroke-width="2"/><text x="68" y="45" font-weight="bold" fill="#2563eb">R</text><line x1="78" y1="40" x2="92" y2="40" stroke="#64748b" stroke-width="2"/><text x="92" y="45" font-weight="bold" fill="#dc2626">COOH</text><text x="32" y="70" font-size="9" fill="#0284c7">Guanidino</text></svg>`,
+                keyFeatures: [
+                    'Precursor directo del Óxido Nítrico (NO) por la enzima NOS (vasodilatador cardiovascular clave).',
+                    'Intermediario fundamental en el Ciclo de la Urea (cleavado por la Arginasa para liberar Urea y Ornitina).',
+                    'Estimula la liberación de Hormona del Crecimiento (GH) e Insulina.'
+                ],
+                clinicalNote: 'La deficiencia en el ciclo de la urea provoca hiperamonemia severa y encefalopatía.'
+            },
+            {
+                id: 'asn',
+                name: 'Asparagina',
+                code1: 'N',
+                code3: 'Asn',
+                category: 'polar-uncharged',
+                categoryLabel: 'Polar sin Carga',
+                essentiality: 'non-essential',
+                essentialityLabel: 'No Esencial',
+                pKa: 'pKa₁: 2.02 | pKa₂: 8.80',
+                pI: '5.41',
+                structureSvg: `<svg viewBox="0 0 100 80" class="w-24 h-20 text-slate-700 font-mono text-xs"><text x="10" y="45" font-weight="bold" fill="#0284c7">H₂N</text><line x1="32" y1="40" x2="48" y2="40" stroke="#64748b" stroke-width="2"/><text x="46" y="45" font-weight="bold">CH</text><line x1="62" y1="40" x2="76" y2="40" stroke="#64748b" stroke-width="2"/><text x="76" y="45" font-weight="bold" fill="#dc2626">COOH</text><text x="38" y="20" font-size="9" fill="#2563eb">CH₂-CONH₂</text></svg>`,
+                keyFeatures: [
+                    'Sitio de N-Glicosilación en proteínas dentro del Retículo Endoplásmico (secuencia Asn-X-Ser/Thr).',
+                    'Sintetizado a partir de Aspartato y Glutamina por la Asparagina Sintetasa.',
+                    'Las células leucémicas (LLA) dependen del suministro exógeno de Asparagina.'
+                ],
+                clinicalNote: 'Uso de la L-Asparaginasa como fármaco antineoplásico en la Leucemia Linfoblástica Aguda.'
+            },
+            {
+                id: 'asp',
+                name: 'Aspartato',
+                code1: 'D',
+                code3: 'Asp',
+                category: 'negative-acidic',
+                categoryLabel: 'Carga Negativa (Ácido)',
+                essentiality: 'non-essential',
+                essentialityLabel: 'No Esencial',
+                pKa: 'pKa₁: 1.88 | pKa₂: 9.60 | pKR: 3.65',
+                pI: '2.77',
+                structureSvg: `<svg viewBox="0 0 100 80" class="w-24 h-20 text-slate-700 font-mono text-xs"><text x="10" y="45" font-weight="bold" fill="#0284c7">H₂N</text><line x1="32" y1="40" x2="48" y2="40" stroke="#64748b" stroke-width="2"/><text x="46" y="45" font-weight="bold">CH</text><line x1="62" y1="40" x2="76" y2="40" stroke="#64748b" stroke-width="2"/><text x="76" y="45" font-weight="bold" fill="#dc2626">COOH</text><text x="35" y="20" font-size="9" fill="#dc2626">CH₂-COO⁻</text></svg>`,
+                keyFeatures: [
+                    'Participa en la lanzadera de Malato-Aspartato para transferir equivalentes reductores (NADH) a la mitocondria.',
+                    'Dona un nitrógeno para la síntesis de Urea y para el anillo purínico/pirimidínico de nucleótidos.',
+                    'Transaminación directa por la AST (Aspartato Aminotransferasa) produce Oxaloacetato.'
+                ],
+                clinicalNote: 'La AST se eleva en infarto agudo de miocardio y patologías de necrosis hepática.'
+            },
+            {
+                id: 'cys',
+                name: 'Cisteína',
+                code1: 'C',
+                code3: 'Cys',
+                category: 'polar-uncharged',
+                categoryLabel: 'Polar sin Carga (Tiol)',
+                essentiality: 'semi-essential',
+                essentialityLabel: 'Condicionalmente Esencial',
+                pKa: 'pKa₁: 1.96 | pKa₂: 10.28 | pKR: 8.18',
+                pI: '5.07',
+                structureSvg: `<svg viewBox="0 0 100 80" class="w-24 h-20 text-slate-700 font-mono text-xs"><text x="10" y="45" font-weight="bold" fill="#0284c7">H₂N</text><line x1="32" y1="40" x2="48" y2="40" stroke="#64748b" stroke-width="2"/><text x="46" y="45" font-weight="bold">CH</text><line x1="62" y1="40" x2="76" y2="40" stroke="#64748b" stroke-width="2"/><text x="76" y="45" font-weight="bold" fill="#dc2626">COOH</text><text x="42" y="20" font-size="9" fill="#eab308">CH₂-SH</text></svg>`,
+                keyFeatures: [
+                    'Posee un grupo tiol (-SH) capaz de formar puentes disulfuro (Cistina) estabilizando la estructura terciaria/cuaternaria de proteínas (ej. Insulina).',
+                    'Componente clave del Glutatión (GSH), el principal antioxidante endógeno celulary desintoxicante.',
+                    'Sintetizado a partir de Metionina y Serina.'
+                ],
+                clinicalNote: 'Defecto en el transporte renal causa Cistinuria, caracterizada por cálculos renales recurrentes de cistina.'
+            },
+            {
+                id: 'glu',
+                name: 'Glutamato',
+                code1: 'E',
+                code3: 'Glu',
+                category: 'negative-acidic',
+                categoryLabel: 'Carga Negativa (Ácido)',
+                essentiality: 'non-essential',
+                essentialityLabel: 'No Esencial',
+                pKa: 'pKa₁: 2.19 | pKa₂: 9.67 | pKR: 4.25',
+                pI: '3.22',
+                structureSvg: `<svg viewBox="0 0 100 80" class="w-24 h-20 text-slate-700 font-mono text-xs"><text x="10" y="45" font-weight="bold" fill="#0284c7">H₂N</text><line x1="32" y1="40" x2="48" y2="40" stroke="#64748b" stroke-width="2"/><text x="46" y="45" font-weight="bold">CH</text><line x1="62" y1="40" x2="76" y2="40" stroke="#64748b" stroke-width="2"/><text x="76" y="45" font-weight="bold" fill="#dc2626">COOH</text><text x="30" y="20" font-size="9" fill="#dc2626">(CH₂)₂-COO⁻</text></svg>`,
+                keyFeatures: [
+                    'Principal neurotransmisor EXCITATORIO del Sistema Nervioso Central.',
+                    'Precursor directo del neurotransmisor INHIBITORIO GABA por descarboxilación.',
+                    'Punto central en el metabolismo proteico de desaminación oxidativa (Glutamato Deshidrogenasa) liberando amonio libre.'
+                ],
+                clinicalNote: 'La excitotoxicidad por glutamato está vinculada a daño neuronal isquémico y enfermedades neurodegenerativas.'
+            },
+            {
+                id: 'gln',
+                name: 'Glutamina',
+                code1: 'Q',
+                code3: 'Gln',
+                category: 'polar-uncharged',
+                categoryLabel: 'Polar sin Carga',
+                essentiality: 'semi-essential',
+                essentialityLabel: 'Condicionalmente Esencial',
+                pKa: 'pKa₁: 2.17 | pKa₂: 9.13',
+                pI: '5.65',
+                structureSvg: `<svg viewBox="0 0 100 80" class="w-24 h-20 text-slate-700 font-mono text-xs"><text x="10" y="45" font-weight="bold" fill="#0284c7">H₂N</text><line x1="32" y1="40" x2="48" y2="40" stroke="#64748b" stroke-width="2"/><text x="46" y="45" font-weight="bold">CH</text><line x1="62" y1="40" x2="76" y2="40" stroke="#64748b" stroke-width="2"/><text x="76" y="45" font-weight="bold" fill="#dc2626">COOH</text><text x="25" y="20" font-size="9" fill="#2563eb">(CH₂)₂-CONH₂</text></svg>`,
+                keyFeatures: [
+                    'Aminoácido más abundante en la sangre circulation libre.',
+                    'Transportador NO TÓXICO de grupos amonio (NH₄⁺) desde los tejidos periféricos hacia el hígado y riñón.',
+                    'Combustible metabólico primario para enterocitos e inmunitarios (linfocitos/macrófagos).'
+                ],
+                clinicalNote: 'Esencial en estados hipercatabólicos (trauma, sepsis, quemaduras) para mantener la barrera intestinal.'
+            },
+            {
+                id: 'gly',
+                name: 'Glicina',
+                code1: 'G',
+                code3: 'Gly',
+                category: 'nonpolar-aliphatic',
+                categoryLabel: 'Apolar / Simplest',
+                essentiality: 'non-essential',
+                essentialityLabel: 'No Esencial',
+                pKa: 'pKa₁: 2.34 | pKa₂: 9.60',
+                pI: '5.97',
+                structureSvg: `<svg viewBox="0 0 100 80" class="w-24 h-20 text-slate-700 font-mono text-xs"><text x="10" y="45" font-weight="bold" fill="#0284c7">H₂N</text><line x1="32" y1="40" x2="48" y2="40" stroke="#64748b" stroke-width="2"/><text x="46" y="45" font-weight="bold">CH₂</text><line x1="62" y1="40" x2="76" y2="40" stroke="#64748b" stroke-width="2"/><text x="76" y="45" font-weight="bold" fill="#dc2626">COOH</text><text x="40" y="20" font-size="9" fill="#64748b">(-H)</text></svg>`,
+                keyFeatures: [
+                    'Aminoácido más pequeño, el ÚNICO AQUIRO (sin carbono asimétrico opticamente activo).',
+                    'Componente fundamental de la hélice de Colágeno (cada 3º residuo es Glicina: Gly-X-Y).',
+                    'Precursor clave del Hemo (por la ALA Sintetasa), Purinas, Creatina y sales biliares.'
+                ],
+                clinicalNote: 'Funciona como neurotransmisor inhibidor en la médula espinal. La estricnina bloquea sus receptores.'
+            },
+            {
+                id: 'his',
+                name: 'Histidina',
+                code1: 'H',
+                code3: 'His',
+                category: 'positive-basic',
+                categoryLabel: 'Carga Positiva (Básico/Imidazol)',
+                essentiality: 'essential',
+                essentialityLabel: 'Esencial',
+                pKa: 'pKa₁: 1.82 | pKa₂: 9.17 | pKR: 6.00',
+                pI: '7.59',
+                structureSvg: `<svg viewBox="0 0 120 80" class="w-28 h-20 text-slate-700 font-mono text-xs"><text x="5" y="45" font-weight="bold" fill="#0284c7">H₂N</text><line x1="27" y1="40" x2="40" y2="40" stroke="#64748b" stroke-width="2"/><text x="38" y="45" font-weight="bold">CH</text><line x1="55" y1="40" x2="68" y2="40" stroke="#64748b" stroke-width="2"/><text x="68" y="45" font-weight="bold" fill="#0284c7">Imidazol</text><line x1="82" y1="40" x2="95" y2="40" stroke="#64748b" stroke-width="2"/><text x="95" y="45" font-weight="bold" fill="#dc2626">COOH</text></svg>`,
+                keyFeatures: [
+                    'Su anillo Imidazol tiene un pKa cercano al pH fisiológico (~6.0), excelente amortiguador/buffer en la Hemoglobina.',
+                    'Precursor directo de la Histamina por descarboxilación (mediador alérgico y secreción gástrica de HCl).',
+                    'Esencial para el centro activo de muchas enzimas hidrolíticas.'
+                ],
+                clinicalNote: 'Utilizado en el diagnóstico de deficiencia de Ácido Fólico mediante el test de FIGLU (Formiminoglutamato).'
+            },
+            {
+                id: 'ile',
+                name: 'Isoleucina',
+                code1: 'I',
+                code3: 'Ile',
+                category: 'nonpolar-aliphatic',
+                categoryLabel: 'Alifático Ramificado (BCAA)',
+                essentiality: 'essential',
+                essentialityLabel: 'Esencial',
+                pKa: 'pKa₁: 2.36 | pKa₂: 9.68',
+                pI: '6.02',
+                structureSvg: `<svg viewBox="0 0 100 80" class="w-24 h-20 text-slate-700 font-mono text-xs"><text x="10" y="45" font-weight="bold" fill="#0284c7">H₂N</text><line x1="32" y1="40" x2="48" y2="40" stroke="#64748b" stroke-width="2"/><text x="46" y="45" font-weight="bold">CH</text><line x1="62" y1="40" x2="76" y2="40" stroke="#64748b" stroke-width="2"/><text x="76" y="45" font-weight="bold" fill="#dc2626">COOH</text><text x="20" y="20" font-size="9" fill="#16a34a">-CH(CH₃)CH₂CH₃</text></svg>`,
+                keyFeatures: [
+                    'Aminoácido de Cadena Ramificada (BCAA) junto con Leucina y Valina.',
+                    'Ambos glucogénico y cetogénico (su degradación aporta Acetil-CoA y Succinil-CoA).',
+                    'Tiene 2 carbonos quirales (centro estereogénico en la cadena lateral).'
+                ],
+                clinicalNote: 'Su acumulación metabólica ocurre en la Enfermedad de Jarabe de Arce por falla de la BCKDH.'
+            },
+            {
+                id: 'leu',
+                name: 'Leucina',
+                code1: 'L',
+                code3: 'Leu',
+                category: 'nonpolar-aliphatic',
+                categoryLabel: 'Alifático Ramificado (BCAA)',
+                essentiality: 'essential',
+                essentialityLabel: 'Esencial',
+                pKa: 'pKa₁: 2.36 | pKa₂: 9.60',
+                pI: '5.98',
+                structureSvg: `<svg viewBox="0 0 100 80" class="w-24 h-20 text-slate-700 font-mono text-xs"><text x="10" y="45" font-weight="bold" fill="#0284c7">H₂N</text><line x1="32" y1="40" x2="48" y2="40" stroke="#64748b" stroke-width="2"/><text x="46" y="45" font-weight="bold">CH</text><line x1="62" y1="40" x2="76" y2="40" stroke="#64748b" stroke-width="2"/><text x="76" y="45" font-weight="bold" fill="#dc2626">COOH</text><text x="20" y="20" font-size="9" fill="#16a34a">-CH₂CH(CH₃)₂</text></svg>`,
+                keyFeatures: [
+                    'Aminoácido estrictamente CETOGÉNICO (se degrada exclusivamente a Acetoacetato y Acetil-CoA).',
+                    'Potente estimulador directo de la vía mTOR, promoviendo la síntesis proteica muscular.',
+                    'BCAA oxidado principalmente en el tejido muscular esquelético.'
+                ],
+                clinicalNote: 'Útil en nutrición deportiva y prevención de sarcopenia en ancianos por activación de mTOR.'
+            },
+            {
+                id: 'lys',
+                name: 'Lisina',
+                code1: 'K',
+                code3: 'Lys',
+                category: 'positive-basic',
+                categoryLabel: 'Carga Positiva (Básico)',
+                essentiality: 'essential',
+                essentialityLabel: 'Esencial',
+                pKa: 'pKa₁: 2.18 | pKa₂: 8.95 | pKR: 10.53',
+                pI: '9.74',
+                structureSvg: `<svg viewBox="0 0 100 80" class="w-24 h-20 text-slate-700 font-mono text-xs"><text x="10" y="45" font-weight="bold" fill="#0284c7">H₂N</text><line x1="32" y1="40" x2="48" y2="40" stroke="#64748b" stroke-width="2"/><text x="46" y="45" font-weight="bold">CH</text><line x1="62" y1="40" x2="76" y2="40" stroke="#64748b" stroke-width="2"/><text x="76" y="45" font-weight="bold" fill="#dc2626">COOH</text><text x="20" y="20" font-size="9" fill="#0284c7">-(CH₂)₄-NH₃⁺</text></svg>`,
+                keyFeatures: [
+                    'Estrictamente CETOGÉNICO.',
+                    'Sufre modificación postraduccional de hidroxilación (Hidroxilisina) en colágeno por la Lisil Hidroxilasa (requiere Vitamina C).',
+                    'Precursor de la Carnitina (móvil de ácidos grasos a la mitocondria).'
+                ],
+                clinicalNote: 'El Escorbuto (deficiencia de Vit. C) altera la hidroxilación de lisina/prolina, debilitando el tejido conectivo.'
+            },
+            {
+                id: 'met',
+                name: 'Metionina',
+                code1: 'M',
+                code3: 'Met',
+                category: 'nonpolar-aliphatic',
+                categoryLabel: 'No Polar (Tioéter)',
+                essentiality: 'essential',
+                essentialityLabel: 'Esencial',
+                pKa: 'pKa₁: 2.28 | pKa₂: 9.21',
+                pI: '5.74',
+                structureSvg: `<svg viewBox="0 0 100 80" class="w-24 h-20 text-slate-700 font-mono text-xs"><text x="10" y="45" font-weight="bold" fill="#0284c7">H₂N</text><line x1="32" y1="40" x2="48" y2="40" stroke="#64748b" stroke-width="2"/><text x="46" y="45" font-weight="bold">CH</text><line x1="62" y1="40" x2="76" y2="40" stroke="#64748b" stroke-width="2"/><text x="76" y="45" font-weight="bold" fill="#dc2626">COOH</text><text x="18" y="20" font-size="9" fill="#eab308">-(CH₂)₂-S-CH₃</text></svg>`,
+                keyFeatures: [
+                    'Aminoácido de inicio en la traducción eucariota (Codón AUG).',
+                    'Precursor de la S-Adenosilmetionina (SAM), el donador de grupos metilo (-CH₃) más importante del cuerpo.',
+                    'Su metabolismo genera Homocisteína.'
+                ],
+                clinicalNote: 'La Hiperhomocisteinemia (por déficit de B12/Folato) es un factor de riesgo independiente de enfermedad cardiovascular.'
+            },
+            {
+                id: 'phe',
+                name: 'Fenilalanina',
+                code1: 'F',
+                code3: 'Phe',
+                category: 'aromatic',
+                categoryLabel: 'Aromático No Polar',
+                essentiality: 'essential',
+                essentialityLabel: 'Esencial',
+                pKa: 'pKa₁: 1.83 | pKa₂: 9.13',
+                pI: '5.48',
+                structureSvg: `<svg viewBox="0 0 120 80" class="w-28 h-20 text-slate-700 font-mono text-xs"><text x="5" y="45" font-weight="bold" fill="#0284c7">H₂N</text><line x1="27" y1="40" x2="40" y2="40" stroke="#64748b" stroke-width="2"/><text x="38" y="45" font-weight="bold">CH</text><line x1="55" y1="40" x2="68" y2="40" stroke="#64748b" stroke-width="2"/><text x="68" y="45" font-weight="bold" fill="#8b5cf6">Benceno</text><line x1="82" y1="40" x2="95" y2="40" stroke="#64748b" stroke-width="2"/><text x="95" y="45" font-weight="bold" fill="#dc2626">COOH</text></svg>`,
+                keyFeatures: [
+                    'Convertido en Tirosina por la enzima Fenilalanina Hidroxilasa (PAH) requiriendo Tetrahidrobiopterina (BH4).',
+                    'Aminoácido aromático hidrofóbico.',
+                    'Tanto glucogénico como cetogénico.'
+                ],
+                clinicalNote: 'Deficiencia de PAH causa Fenilcetonuria (PKU), acumulando fenilpiruvato resultando en discapacidad intelectual severa si no se trata con dieta.'
+            },
+            {
+                id: 'pro',
+                name: 'Prolina',
+                code1: 'P',
+                code3: 'Pro',
+                category: 'nonpolar-aliphatic',
+                categoryLabel: 'Iminoácido Cíclico',
+                essentiality: 'non-essential',
+                essentialityLabel: 'No Esencial',
+                pKa: 'pKa₁: 1.99 | pKa₂: 10.96',
+                pI: '6.48',
+                structureSvg: `<svg viewBox="0 0 100 80" class="w-24 h-20 text-slate-700 font-mono text-xs"><rect x="30" y="25" width="35" height="35" rx="5" fill="none" stroke="#64748b" stroke-width="2"/><text x="35" y="48" font-weight="bold" fill="#0284c7">HN-R</text><text x="70" y="48" font-weight="bold" fill="#dc2626">COOH</text></svg>`,
+                keyFeatures: [
+                    'Único aminoácido con una amina secundaria (grupo imino cíclico), imponiendo rigidez en la cadena polipeptídica.',
+                    'Suele actuar como "rompedor de hélices alfa" en estructuras proteicas.',
+                    'Hidroxilado a Hidroxiprolina en el colágeno para estabilizar la triple hélice.'
+                ],
+                clinicalNote: 'Crucial en la cicatrización de heridas y síntesis de matriz extracelular.'
+            },
+            {
+                id: 'ser',
+                name: 'Serina',
+                code1: 'S',
+                code3: 'Ser',
+                category: 'polar-uncharged',
+                categoryLabel: 'Polar sin Carga (Alcohol)',
+                essentiality: 'non-essential',
+                essentialityLabel: 'No Esencial',
+                pKa: 'pKa₁: 2.21 | pKa₂: 9.15',
+                pI: '5.68',
+                structureSvg: `<svg viewBox="0 0 100 80" class="w-24 h-20 text-slate-700 font-mono text-xs"><text x="10" y="45" font-weight="bold" fill="#0284c7">H₂N</text><line x1="32" y1="40" x2="48" y2="40" stroke="#64748b" stroke-width="2"/><text x="46" y="45" font-weight="bold">CH</text><line x1="62" y1="40" x2="76" y2="40" stroke="#64748b" stroke-width="2"/><text x="76" y="45" font-weight="bold" fill="#dc2626">COOH</text><text x="40" y="20" font-size="9" fill="#0284c7">-CH₂-OH</text></svg>`,
+                keyFeatures: [
+                    'Sitio frecuente de O-Glicosilación (Aparato de Golgi) y Fosforilación (por Proteína Cinasas).',
+                    'Sitio catalítico fundamental en las proteasas de serina (ej. Tripsina, Quimotripsina, Trombina).',
+                    'Precursor de Esfingolípidos y Fosfatidilserina.'
+                ],
+                clinicalNote: 'La fosforilación reversible de serina regula múltiples vías de señalización metabólica e insulínica.'
+            },
+            {
+                id: 'thr',
+                name: 'Treonina',
+                code1: 'T',
+                code3: 'Thr',
+                category: 'polar-uncharged',
+                categoryLabel: 'Polar sin Carga (Alcohol)',
+                essentiality: 'essential',
+                essentialityLabel: 'Esencial',
+                pKa: 'pKa₁: 2.11 | pKa₂: 9.62',
+                pI: '5.60',
+                structureSvg: `<svg viewBox="0 0 100 80" class="w-24 h-20 text-slate-700 font-mono text-xs"><text x="10" y="45" font-weight="bold" fill="#0284c7">H₂N</text><line x1="32" y1="40" x2="48" y2="40" stroke="#64748b" stroke-width="2"/><text x="46" y="45" font-weight="bold">CH</text><line x1="62" y1="40" x2="76" y2="40" stroke="#64748b" stroke-width="2"/><text x="76" y="45" font-weight="bold" fill="#dc2626">COOH</text><text x="25" y="20" font-size="9" fill="#0284c7">-CH(OH)CH₃</text></svg>`,
+                keyFeatures: [
+                    'Posee un grupo hidroxilo (-OH) y un segundo centro quiral.',
+                    'Sitio de fosforilación por Serina/Treonina cinasas y O-glicosilación.',
+                    'Degradado a Propanoyl-CoA (glucogénico).'
+                ],
+                clinicalNote: 'Componente importante de las mucinas que recubren la mucosa intestinal y respiratoria.'
+            },
+            {
+                id: 'trp',
+                name: 'Triptófano',
+                code1: 'W',
+                code3: 'Trp',
+                category: 'aromatic',
+                categoryLabel: 'Aromático (Indol)',
+                essentiality: 'essential',
+                essentialityLabel: 'Esencial',
+                pKa: 'pKa₁: 2.38 | pKa₂: 9.39',
+                pI: '5.89',
+                structureSvg: `<svg viewBox="0 0 120 80" class="w-28 h-20 text-slate-700 font-mono text-xs"><text x="5" y="45" font-weight="bold" fill="#0284c7">H₂N</text><line x1="27" y1="40" x2="40" y2="40" stroke="#64748b" stroke-width="2"/><text x="38" y="45" font-weight="bold">CH</text><line x1="55" y1="40" x2="68" y2="40" stroke="#64748b" stroke-width="2"/><text x="68" y="45" font-weight="bold" fill="#8b5cf6">Anillo Indol</text><line x1="90" y1="40" x2="98" y2="40" stroke="#64748b" stroke-width="2"/><text x="98" y="45" font-weight="bold" fill="#dc2626">C</text></svg>`,
+                keyFeatures: [
+                    'Aminoácido de mayor tamaño estructural (contiene un anillo indol doble).',
+                    'Precursor del neurotransmisor Serotonina, la hormona Melatonina y la Niacina (Vitamina B3).',
+                    'Absorbe luz UV fuertemente a 280 nm (usado para cuantificar proteínas lab).'
+                ],
+                clinicalNote: 'La Enfermedad de Hartnup es un defecto en su absorción renal/intestinal, produciendo síntomas similares a la Pelagra.'
+            },
+            {
+                id: 'tyr',
+                name: 'Tirosina',
+                code1: 'Y',
+                code3: 'Tyr',
+                category: 'aromatic',
+                categoryLabel: 'Aromático (Fenol)',
+                essentiality: 'semi-essential',
+                essentialityLabel: 'Condicionalmente Esencial',
+                pKa: 'pKa₁: 2.20 | pKa₂: 9.11 | pKR: 10.07',
+                pI: '5.66',
+                structureSvg: `<svg viewBox="0 0 120 80" class="w-28 h-20 text-slate-700 font-mono text-xs"><text x="5" y="45" font-weight="bold" fill="#0284c7">H₂N</text><line x1="27" y1="40" x2="40" y2="40" stroke="#64748b" stroke-width="2"/><text x="38" y="45" font-weight="bold">CH</text><line x1="55" y1="40" x2="68" y2="40" stroke="#64748b" stroke-width="2"/><text x="68" y="45" font-weight="bold" fill="#8b5cf6">Fenol-OH</text><line x1="90" y1="40" x2="98" y2="40" stroke="#64748b" stroke-width="2"/><text x="98" y="45" font-weight="bold" fill="#dc2626">C</text></svg>`,
+                keyFeatures: [
+                    'Precursor de Catecolaminas (Dopamina, Noradrenalina, Adrenalina), Hormonas Tiroideas (T3/T4) y Melanin pigmento.',
+                    'Sintetizado a partir de Fenilalanina.',
+                    'Sitio clave para receptores Receptor Tirosina Cincasa (RTK) como el receptor de Insulina.'
+                ],
+                clinicalNote: 'Su deficiencia catabólica causa Alcaptonuria (acumulo de ácido homogentísico) y Albinismo (déficit de tirosinasa).'
+            },
+            {
+                id: 'val',
+                name: 'Valina',
+                code1: 'V',
+                code3: 'Val',
+                category: 'nonpolar-aliphatic',
+                categoryLabel: 'Alifático Ramificado (BCAA)',
+                essentiality: 'essential',
+                essentialityLabel: 'Esencial',
+                pKa: 'pKa₁: 2.32 | pKa₂: 9.62',
+                pI: '5.96',
+                structureSvg: `<svg viewBox="0 0 100 80" class="w-24 h-20 text-slate-700 font-mono text-xs"><text x="10" y="45" font-weight="bold" fill="#0284c7">H₂N</text><line x1="32" y1="40" x2="48" y2="40" stroke="#64748b" stroke-width="2"/><text x="46" y="45" font-weight="bold">CH</text><line x1="62" y1="40" x2="76" y2="40" stroke="#64748b" stroke-width="2"/><text x="76" y="45" font-weight="bold" fill="#dc2626">COOH</text><text x="30" y="20" font-size="9" fill="#16a34a">-CH(CH₃)₂</text></svg>`,
+                keyFeatures: [
+                    'Aminoácido BCAA puramente Glucogénico.',
+                    'Proporciona estabilidad hidrofóbica en el interior de núcleos proteicos.',
+                    'Sustituido por Glutamato en la posición 6 de la cadena beta de la Hemoglobina en Anemia Células Falciformes.'
+                ],
+                clinicalNote: 'En la Anemia de Células Falciformes (HbS), la sustitución de Glu (polar) por Val (no polar) provoca polimerización de la hemoglobina.'
+            }
+        ];
+
+        // State variables
+        let currentMode = 'grid'; // 'grid', 'single', 'quiz'
+        let currentCardIndex = 0;
+        let filteredCards = [...aminoAcids];
+        let masteredIds = new Set(JSON.parse(localStorage.getItem('mastered_aminoacids') || '[]'));
+        
+        // Quiz state
+        let quizCurrentItem = null;
+        let quizOptions = [];
+        let quizScore = { correct: 0, total: 0 };
+        let quizAnswered = false;
+
+        // Colors mapping for category badges
+        const categoryBadgeStyles = {
+            'nonpolar-aliphatic': 'bg-emerald-50 text-emerald-700 border-emerald-200',
+            'aromatic': 'bg-purple-50 text-purple-700 border-purple-200',
+            'polar-uncharged': 'bg-sky-50 text-sky-700 border-sky-200',
+            'positive-basic': 'bg-blue-50 text-blue-700 border-blue-200',
+            'negative-acidic': 'bg-rose-50 text-rose-700 border-rose-200'
+        };
+
+        const essentialityBadgeStyles = {
+            'essential': 'bg-amber-100 text-amber-800',
+            'non-essential': 'bg-slate-100 text-slate-700',
+            'semi-essential': 'bg-indigo-100 text-indigo-800'
+        };
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            updateMasteryStats();
+            applyFilters();
+            setupSearchListener();
+        });
+
+        // Search Listener
+        function setupSearchListener() {
+            document.getElementById('search-input').addEventListener('input', () => {
+                applyFilters();
+            });
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
+            const category = document.getElementById('category-filter').value;
+            const essential = document.getElementById('essential-filter').value;
+            const status = document.getElementById('status-filter').value;
+
+            filteredCards = aminoAcids.filter(item => {
+                // Search filter
+                const matchesSearch = item.name.toLowerCase().includes(searchQuery) ||
+                                     item.code1.toLowerCase() === searchQuery ||
+                                     item.code3.toLowerCase().includes(searchQuery);
+
+                // Category filter
+                const matchesCategory = category === 'all' || item.category === category;
+
+                // Essential filter
+                const matchesEssential = essential === 'all' || item.essentiality === essential;
+
+                // Status filter
+                const isMastered = masteredIds.has(item.id);
+                const matchesStatus = status === 'all' || 
+                                     (status === 'mastered' && isMastered) ||
+                                     (status === 'unmastered' && !isMastered);
+
+                return matchesSearch && matchesCategory && matchesEssential && matchesStatus;
+            });
+
+            currentCardIndex = 0;
+
+            if (currentMode === 'grid') {
+                renderGrid();
+            } else if (currentMode === 'single') {
+                renderSingleCard();
+            }
+        }
+
+        // Render Grid Mode
+        function renderGrid() {
+            const container = document.getElementById('view-grid');
+            container.innerHTML = '';
+
+            if (filteredCards.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full py-12 text-center">
+                        <i class="fa-solid fa-flask text-4xl text-slate-300 mb-3"></i>
+                        <p class="text-slate-500 font-medium">No se encontraron aminoácidos con los filtros aplicados.</p>
+                        <button onclick="resetFilters()" class="mt-3 text-xs text-sky-600 hover:underline">Restablecer filtros</button>
+                    </div>
+                `;
+                return;
+            }
+
+            filteredCards.forEach((item) => {
+                const isMastered = masteredIds.has(item.id);
+                const catClass = categoryBadgeStyles[item.category] || 'bg-slate-100 text-slate-700';
+                const essClass = essentialityBadgeStyles[item.essentiality] || 'bg-slate-100';
+
+                const cardElem = document.createElement('div');
+                cardElem.className = 'perspective-1000 h-[430px] cursor-pointer group';
+                cardElem.onclick = (e) => {
+                    // Prevent flip if click on buttons inside
+                    if (e.target.closest('button')) return;
+                    const inner = cardElem.querySelector('.card-inner');
+                    inner.classList.toggle('rotate-y-180');
+                };
+
+                cardElem.innerHTML = `
+                    <div class="card-inner relative w-full h-full duration-500 transform-style-3d shadow-md hover:shadow-xl rounded-2xl transition-all">
+                        
+                        <!-- FRONT -->
+                        <div class="absolute w-full h-full backface-hidden gradient-card-front rounded-2xl border border-slate-200 p-5 flex flex-col justify-between">
+                            <div class="flex justify-between items-start">
+                                <span class="text-xs px-2.5 py-1 rounded-full font-semibold border ${catClass}">
+                                    ${item.categoryLabel}
+                                </span>
+                                <button onclick="toggleMastery('${item.id}', event)" class="text-lg transition-transform hover:scale-110" title="${isMastered ? 'Marcar como no aprendido' : 'Marcar como aprendido'}">
+                                    <i class="${isMastered ? 'fa-solid fa-circle-check text-emerald-500' : 'fa-regular fa-circle text-slate-300'}"></i>
+                                </button>
+                            </div>
+
+                            <div class="text-center my-auto py-2">
+                                <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-sky-50 text-sky-700 border border-sky-100 mb-3 shadow-inner">
+                                    <span class="text-4xl font-extrabold tracking-tight">${item.code1}</span>
+                                </div>
+                                <h3 class="text-xl font-bold text-slate-800">${item.name}</h3>
+                                <p class="text-sm font-bold text-sky-600">${item.code3}</p>
+                                <span class="inline-block mt-2 text-[11px] font-semibold px-2 py-0.5 rounded ${essClass}">
+                                    ${item.essentialityLabel}
+                                </span>
+                            </div>
+
+                            <div class="bg-slate-50 border border-slate-100 rounded-xl p-2 flex justify-around items-center text-center">
+                                <div class="flex-1">
+                                    <span class="text-[10px] text-slate-400 block uppercase">Estructura</span>
+                                    <div class="flex justify-center">${item.structureSvg}</div>
+                                </div>
+                                <div class="w-px h-8 bg-slate-200"></div>
+                                <div class="flex-1">
+                                    <span class="text-[10px] text-slate-400 block uppercase">Punto Isoeléctrico</span>
+                                    <span class="text-xs font-bold text-slate-700">pI = ${item.pI}</span>
+                                </div>
+                            </div>
+
+                            <div class="text-center mt-2">
+                                <span class="text-[11px] text-sky-600 font-semibold group-hover:underline">Voltear para detalles <i class="fa-solid fa-rotate text-xs ml-1"></i></span>
+                            </div>
+                        </div>
+
+                        <!-- BACK -->
+                        <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-white rounded-2xl border border-slate-200 p-5 flex flex-col justify-between custom-scrollbar overflow-y-auto">
+                            <div>
+                                <div class="flex justify-between items-center pb-2 border-b border-slate-100 mb-3">
+                                    <h4 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                                        <i class="fa-solid fa-stethoscope text-sky-600"></i> ${item.name} (${item.code3})
+                                    </h4>
+                                    <button onclick="speakText('${item.name}. ${item.categoryLabel}. ${item.keyFeatures[0]}')" class="text-slate-400 hover:text-sky-600 p-1" title="Escuchar síntesis de voz">
+                                        <i class="fa-solid fa-volume-high"></i>
+                                    </button>
+                                </div>
+
+                                <div class="space-y-2 text-xs">
+                                    <div>
+                                        <span class="font-bold text-slate-700 block mb-1">Características Bioquímicas:</span>
+                                        <ul class="list-disc pl-4 space-y-1 text-slate-600">
+                                            ${item.keyFeatures.map(f => `<li>${f}</li>`).join('')}
+                                        </ul>
+                                    </div>
+
+                                    <div class="mt-3 bg-amber-50 border border-amber-200 rounded-lg p-2.5">
+                                        <span class="font-bold text-amber-800 text-[11px] block flex items-center gap-1">
+                                            <i class="fa-solid fa-notes-medical"></i> Relevancia Clínica / Enfermedad:
+                                        </span>
+                                        <p class="text-[11px] text-amber-900 mt-0.5">${item.clinicalNote}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-2 border-t border-slate-100 mt-2 flex justify-between items-center text-[11px] text-slate-400">
+                                <span>${item.pKa}</span>
+                                <span class="text-sky-600 font-medium">Hacer clic para regresar</span>
+                            </div>
+                        </div>
+
+                    </div>
+                `;
+                container.appendChild(cardElem);
+            });
+        }
+
+        // Render Single Card Mode
+        function renderSingleCard() {
+            if (filteredCards.length === 0) {
+                document.getElementById('single-card-indicator').innerText = '0 de 0';
+                return;
+            }
+
+            const item = filteredCards[currentCardIndex];
+            const isMastered = masteredIds.has(item.id);
+            const catClass = categoryBadgeStyles[item.category] || 'bg-slate-100';
+            const essClass = essentialityBadgeStyles[item.essentiality] || 'bg-slate-100';
+
+            document.getElementById('single-card-indicator').innerText = `Tarjeta ${currentCardIndex + 1} de ${filteredCards.length}`;
+
+            // Update Mastery button
+            const masteryBtn = document.getElementById('single-mastery-btn');
+            if (isMastered) {
+                masteryBtn.className = "px-5 py-2.5 bg-emerald-600 text-white font-semibold rounded-xl shadow-md transition flex items-center gap-2 hover:bg-emerald-700";
+                masteryBtn.innerHTML = `<i class="fa-solid fa-circle-check"></i> Aprendido`;
+            } else {
+                masteryBtn.className = "px-5 py-2.5 bg-slate-100 text-slate-700 hover:bg-slate-200 font-semibold rounded-xl transition flex items-center gap-2 border border-slate-300";
+                masteryBtn.innerHTML = `<i class="fa-regular fa-circle"></i> Marcar como Aprendido`;
+            }
+
+            // Render Front
+            const front = document.getElementById('single-card-front');
+            front.innerHTML = `
+                <div class="w-full flex justify-between items-center">
+                    <span class="text-xs px-3 py-1 rounded-full font-semibold border ${catClass}">${item.categoryLabel}</span>
+                    <span class="text-xs font-semibold px-2.5 py-1 rounded ${essClass}">${item.essentialityLabel}</span>
+                </div>
+
+                <div class="my-auto text-center py-4">
+                    <div class="inline-flex items-center justify-center w-28 h-28 rounded-3xl bg-sky-100 text-sky-700 border-2 border-sky-200 mb-4 shadow-inner">
+                        <span class="text-6xl font-black">${item.code1}</span>
+                    </div>
+                    <h2 class="text-3xl font-extrabold text-slate-800">${item.name}</h2>
+                    <p class="text-lg font-bold text-sky-600 mt-1">${item.code3}</p>
+                </div>
+
+                <div class="w-full bg-white/80 border border-slate-200 rounded-xl p-3 flex justify-around items-center">
+                    <div class="text-center">
+                        <span class="text-[10px] text-slate-400 block uppercase font-bold">Punto Isoeléctrico</span>
+                        <span class="text-sm font-bold text-slate-700">pI = ${item.pI}</span>
+                    </div>
+                    <div class="w-px h-8 bg-slate-200"></div>
+                    <div class="text-center">
+                        <span class="text-[10px] text-slate-400 block uppercase font-bold">Valores pKa</span>
+                        <span class="text-xs font-semibold text-slate-600">${item.pKa}</span>
+                    </div>
+                </div>
+            `;
+
+            // Render Back
+            const back = document.getElementById('single-card-back');
+            back.innerHTML = `
+                <div class="flex justify-between items-center pb-3 border-b border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-dna text-sky-600"></i> ${item.name} (${item.code1} / ${item.code3})
+                    </h3>
+                    <button onclick="event.stopPropagation(); speakText('${item.name}. ${item.categoryLabel}. ${item.keyFeatures.join('. ')}')" class="text-slate-400 hover:text-sky-600 p-1 text-base" title="Escuchar síntesis de voz">
+                        <i class="fa-solid fa-volume-high"></i>
+                    </button>
+                </div>
+
+                <div class="my-auto py-3 space-y-4">
+                    <div>
+                        <h4 class="text-xs font-bold text-sky-700 uppercase tracking-wider mb-2">Estructura Química</h4>
+                        <div class="bg-slate-50 border border-slate-200 rounded-xl p-2 flex justify-center">
+                            ${item.structureSvg}
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-xs font-bold text-sky-700 uppercase tracking-wider mb-2">Características Clave Bioquímicas</h4>
+                        <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-slate-700">
+                            ${item.keyFeatures.map(f => `<li>${f}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-3">
+                        <h4 class="text-xs font-bold text-amber-800 uppercase tracking-wider flex items-center gap-1.5">
+                            <i class="fa-solid fa-notes-medical"></i> Relevancia Médica / Clínica
+                        </h4>
+                        <p class="text-xs sm:text-sm text-amber-900 mt-1">${item.clinicalNote}</p>
+                    </div>
+                </div>
+
+                <div class="text-center text-xs text-slate-400 pt-2 border-t border-slate-100">
+                    Haz clic para voltear la tarjeta
+                </div>
+            `;
+        }
+
+        function flipSingleCard() {
+            const inner = document.getElementById('single-card-inner');
+            inner.classList.toggle('rotate-y-180');
+        }
+
+        function nextCard() {
+            if (filteredCards.length === 0) return;
+            const inner = document.getElementById('single-card-inner');
+            inner.classList.remove('rotate-y-180');
+            setTimeout(() => {
+                currentCardIndex = (currentCardIndex + 1) % filteredCards.length;
+                renderSingleCard();
+            }, 150);
+        }
+
+        function prevCard() {
+            if (filteredCards.length === 0) return;
+            const inner = document.getElementById('single-card-inner');
+            inner.classList.remove('rotate-y-180');
+            setTimeout(() => {
+                currentCardIndex = (currentCardIndex - 1 + filteredCards.length) % filteredCards.length;
+                renderSingleCard();
+            }, 150);
+        }
+
+        function shuffleCards() {
+            filteredCards.sort(() => Math.random() - 0.5);
+            currentCardIndex = 0;
+            const inner = document.getElementById('single-card-inner');
+            inner.classList.remove('rotate-y-180');
+            renderSingleCard();
+        }
+
+        // Quiz Mode Logic
+        function startQuiz() {
+            quizScore = { correct: 0, total: 0 };
+            document.getElementById('quiz-score').innerText = `0 / 0`;
+            nextQuizQuestion();
+        }
+
+        function nextQuizQuestion() {
+            quizAnswered = false;
+            document.getElementById('quiz-feedback').classList.add('hidden');
+            document.getElementById('quiz-next-btn').classList.add('hidden');
+
+            // Pick random amino acid
+            const randomIdx = Math.floor(Math.random() * aminoAcids.length);
+            quizCurrentItem = aminoAcids[randomIdx];
+
+            // Generate 3 wrong options
+            const wrongOptions = aminoAcids.filter(a => a.id !== quizCurrentItem.id)
+                .sort(() => Math.random() - 0.5)
+                .slice(0, 3);
+
+            quizOptions = [quizCurrentItem, ...wrongOptions].sort(() => Math.random() - 0.5);
+
+            // Render Clues
+            document.getElementById('quiz-clue-category').innerText = `Categoría: ${quizCurrentItem.categoryLabel} | ${quizCurrentItem.essentialityLabel}`;
+            
+            const cluesContainer = document.getElementById('quiz-clues');
+            cluesContainer.innerHTML = `
+                <div class="space-y-2">
+                    <p class="font-medium text-slate-800"><i class="fa-solid fa-lightbulb text-amber-500 mr-1.5"></i> <strong>Pista 1:</strong> ${quizCurrentItem.keyFeatures[0]}</p>
+                    <p class="font-medium text-slate-800"><i class="fa-solid fa-kit-medical text-sky-500 mr-1.5"></i> <strong>Relevancia Médica:</strong> ${quizCurrentItem.clinicalNote}</p>
+                    <p class="text-xs text-slate-500"><strong>Punto Isoeléctrico:</strong> pI = ${quizCurrentItem.pI}</p>
+                </div>
+            `;
+
+            // Render Options
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+
+            quizOptions.forEach((option) => {
+                const btn = document.createElement('button');
+                btn.className = "quiz-option-btn w-full p-4 bg-white border border-slate-200 hover:border-sky-500 hover:bg-sky-50 rounded-xl text-left transition flex items-center justify-between font-semibold text-slate-700 shadow-sm";
+                btn.onclick = () => selectQuizAnswer(option, btn);
+                btn.innerHTML = `
+                    <span>${option.name}</span>
+                    <span class="text-xs px-2 py-0.5 rounded bg-slate-100 text-slate-500 font-mono">${option.code3} / ${option.code1}</span>
+                `;
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectQuizAnswer(selectedOption, btnElem) {
+            if (quizAnswered) return;
+            quizAnswered = true;
+
+            quizScore.total++;
+            const isCorrect = selectedOption.id === quizCurrentItem.id;
+            const feedbackElem = document.getElementById('quiz-feedback');
+
+            // Disable all option buttons
+            const allBtns = document.querySelectorAll('.quiz-option-btn');
+            allBtns.forEach(btn => btn.disabled = true);
+
+            if (isCorrect) {
+                quizScore.correct++;
+                btnElem.classList.remove('border-slate-200', 'hover:bg-sky-50');
+                btnElem.classList.add('bg-emerald-500', 'text-white', 'border-emerald-600');
+                
+                feedbackElem.className = "p-4 rounded-xl text-center font-semibold text-sm mb-4 bg-emerald-100 text-emerald-800 border border-emerald-300";
+                feedbackElem.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5 text-base"></i> ¡Correcto! Es ${quizCurrentItem.name} (${quizCurrentItem.code3} - ${quizCurrentItem.code1}).`;
+            } else {
+                btnElem.classList.remove('border-slate-200', 'hover:bg-sky-50');
+                btnElem.classList.add('bg-rose-500', 'text-white', 'border-rose-600');
+
+                // Highlight correct button
+                allBtns.forEach(btn => {
+                    if (btn.innerText.includes(quizCurrentItem.name)) {
+                        btn.classList.add('bg-emerald-100', 'border-emerald-400', 'text-emerald-800');
+                    }
+                });
+
+                feedbackElem.className = "p-4 rounded-xl text-center font-semibold text-sm mb-4 bg-rose-100 text-rose-800 border border-rose-300";
+                feedbackElem.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1.5 text-base"></i> Incorrecto. La respuesta correcta era <strong>${quizCurrentItem.name} (${quizCurrentItem.code3})</strong>.`;
+            }
+
+            document.getElementById('quiz-score').innerText = `${quizScore.correct} / ${quizScore.total}`;
+            feedbackElem.classList.remove('hidden');
+            document.getElementById('quiz-next-btn').classList.remove('hidden');
+        }
+
+        // Mode Switcher
+        function setMode(mode) {
+            currentMode = mode;
+
+            // UI Tab highlighting
+            document.getElementById('tab-grid').className = mode === 'grid' 
+                ? "flex-1 md:flex-none px-4 py-2 rounded-lg transition-all flex items-center justify-center gap-2 bg-sky-600 text-white shadow-md font-semibold"
+                : "flex-1 md:flex-none px-4 py-2 rounded-lg transition-all flex items-center justify-center gap-2 text-slate-300 hover:text-white";
+            
+            document.getElementById('tab-single').className = mode === 'single' 
+                ? "flex-1 md:flex-none px-4 py-2 rounded-lg transition-all flex items-center justify-center gap-2 bg-sky-600 text-white shadow-md font-semibold"
+                : "flex-1 md:flex-none px-4 py-2 rounded-lg transition-all flex items-center justify-center gap-2 text-slate-300 hover:text-white";
+
+            document.getElementById('tab-quiz').className = mode === 'quiz' 
+                ? "flex-1 md:flex-none px-4 py-2 rounded-lg transition-all flex items-center justify-center gap-2 bg-sky-600 text-white shadow-md font-semibold"
+                : "flex-1 md:flex-none px-4 py-2 rounded-lg transition-all flex items-center justify-center gap-2 text-slate-300 hover:text-white";
+
+            // View display toggles
+            document.getElementById('view-grid').classList.toggle('hidden', mode !== 'grid');
+            document.getElementById('view-single').classList.toggle('hidden', mode !== 'single');
+            document.getElementById('view-single').classList.toggle('flex', mode === 'single');
+            document.getElementById('view-quiz').classList.toggle('hidden', mode !== 'quiz');
+            document.getElementById('controls-section').classList.toggle('hidden', mode === 'quiz');
+
+            if (mode === 'grid') {
+                renderGrid();
+            } else if (mode === 'single') {
+                renderSingleCard();
+            } else if (mode === 'quiz') {
+                startQuiz();
+            }
+        }
+
+        // Mastery Progress Tracking
+        function toggleMastery(id, event) {
+            if (event) event.stopPropagation();
+            if (masteredIds.has(id)) {
+                masteredIds.delete(id);
+            } else {
+                masteredIds.add(id);
+            }
+            saveMastery();
+            updateMasteryStats();
+            applyFilters();
+        }
+
+        function toggleCurrentMastery(event) {
+            if (filteredCards.length === 0) return;
+            const currentItem = filteredCards[currentCardIndex];
+            toggleMastery(currentItem.id, event);
+        }
+
+        function saveMastery() {
+            localStorage.setItem('mastered_aminoacids', JSON.stringify(Array.from(masteredIds)));
+        }
+
+        function updateMasteryStats() {
+            const count = masteredIds.size;
+            document.getElementById('mastered-count').innerText = `${count} / ${aminoAcids.length}`;
+            const percentage = (count / aminoAcids.length) * 100;
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+        }
+
+        function resetProgress() {
+            if (confirm('¿Deseas reiniciar tu progreso de tarjetas aprendidas?')) {
+                masteredIds.clear();
+                saveMastery();
+                updateMasteryStats();
+                applyFilters();
+            }
+        }
+
+        function resetFilters() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('category-filter').value = 'all';
+            document.getElementById('essential-filter').value = 'all';
+            document.getElementById('status-filter').value = 'all';
+            applyFilters();
+        }
+
+        // Web Speech API for audio synthesis
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Stop current speaking
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'es-ES';
+                utterance.rate = 0.95;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('La síntesis de voz no está soportada en tu navegador.');
+            }
+        }
+    </script>
+</body>
+</html>
